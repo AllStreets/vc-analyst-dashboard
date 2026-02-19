@@ -72,8 +72,8 @@ const analyzeStartup = async (startupName) => {
 
     console.log(`Analyzing ${startupName}...`);
 
-    const message = await openai.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+    const message = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
       max_tokens: 2000,
       messages: [
         {
@@ -84,7 +84,7 @@ const analyzeStartup = async (startupName) => {
     });
 
     // Extract JSON from response
-    const responseText = message.content[0].text;
+    const responseText = message.choices[0].message.content;
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
 
     if (!jsonMatch) {
